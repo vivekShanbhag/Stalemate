@@ -1,1 +1,0 @@
-jar -tvf $1 | grep "\.class$" | cut -b 8- | cut --delimiter=" " -f 7;
