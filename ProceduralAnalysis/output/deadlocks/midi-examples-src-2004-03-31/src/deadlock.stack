@@ -1,0 +1,464 @@
+vivek@vivek-laptop:~/phd-new/thesis/next/analysis/midi-examples-src-2004-03-31/src$ jdb -classpath ..:. RealTimeSequencerTest -S "Real Time Sequencer" ../../take5.mid
+Initializing jdb ...
+> stop in RealTimeSequencerTest.before
+Deferring breakpoint RealTimeSequencerTest.before.
+It will be set after the class is loaded.
+> run
+run RealTimeSequencerTest -S "Real Time Sequencer" ../../take5.mid
+Set uncaught java.lang.Throwable
+Set deferred uncaught java.lang.Throwable
+> 
+VM Started: Set deferred breakpoint RealTimeSequencerTest.before
+
+Breakpoint hit: "thread=main", RealTimeSequencerTest.before(), line=65 bci=0
+65    		boolean	bUseSynthesizer = false;
+
+main[1] stop in com.sun.media.sound.RealTimeSequencer.setTickPosition
+Deferring breakpoint com.sun.media.sound.RealTimeSequencer.setTickPosition.
+It will be set after the class is loaded.
+main[1] stop in com.sun.media.sound.RealTimeSequencer.implStart
+Deferring breakpoint com.sun.media.sound.RealTimeSequencer.implStart.
+It will be set after the class is loaded.
+main[1] cont
+> MidiPlayer.main(): sequencer name: Real Time Sequencer
+using default synthesizer because no other option was given
+before MIDI file reading.
+MIDI file read.
+Set deferred breakpoint com.sun.media.sound.RealTimeSequencer.implStart
+Set deferred breakpoint com.sun.media.sound.RealTimeSequencer.setTickPosition
+Sequencer: com.sun.media.sound.RealTimeSequencer@1abfbdc
+Sequencer opened.
+
+Breakpoint hit: "thread=main", com.sun.media.sound.RealTimeSequencer.setTickPosition(), line=625 bci=0
+
+main[1] dump this
+ this = {
+    DEBUG_PUMP: false
+    DEBUG_PUMP_ALL: false
+    RMF: true
+    eventDispatcher: instance of com.sun.media.sound.EventDispatcher(id=470)
+    info: instance of com.sun.media.sound.RealTimeSequencer$RealTimeSequencerInfo(id=471)
+    masterSyncModes: instance of javax.sound.midi.Sequencer$SyncMode[1] (id=472)
+    slaveSyncModes: instance of javax.sound.midi.Sequencer$SyncMode[1] (id=474)
+    masterSyncMode: instance of javax.sound.midi.Sequencer$SyncMode(id=475)
+    slaveSyncMode: instance of javax.sound.midi.Sequencer$SyncMode(id=476)
+    sequence: instance of javax.sound.midi.Sequence(id=477)
+    cacheTempoMPQ: -1.0
+    cacheTempoFactor: -1.0
+    trackMuted: null
+    trackSolo: null
+    tempoCache: instance of com.sun.media.sound.MidiUtils$TempoCache(id=478)
+    running: false
+    playThread: instance of com.sun.media.sound.RealTimeSequencer$PlayThread(id=479)
+    recording: false
+    recordingTracks: instance of java.util.ArrayList(id=480)
+    loopStart: 0
+    loopEnd: -1
+    loopCount: 0
+    metaEventListeners: instance of java.util.ArrayList(id=481)
+    controllerEventListeners: instance of java.util.ArrayList(id=482)
+    seqBridge: null
+    autoConnect: false
+    doAutoConnectAtNextOpen: false
+    autoConnectedReceiver: null
+    com.sun.media.sound.AbstractMidiDevice.TRACE_TRANSMITTER: false
+    com.sun.media.sound.AbstractMidiDevice.receiverList: null
+    com.sun.media.sound.AbstractMidiDevice.transmitterList: null
+    com.sun.media.sound.AbstractMidiDevice.traRecLock: instance of java.lang.Object(id=483)
+    com.sun.media.sound.AbstractMidiDevice.info: instance of com.sun.media.sound.RealTimeSequencer$RealTimeSequencerInfo(id=471)
+    com.sun.media.sound.AbstractMidiDevice.open: true
+    com.sun.media.sound.AbstractMidiDevice.openRefCount: -1
+    com.sun.media.sound.AbstractMidiDevice.openKeepingObjects: null
+    com.sun.media.sound.AbstractMidiDevice.id: 0
+}
+main[1] threads
+Group system:
+  (java.lang.ref.Reference$ReferenceHandler)0x128 Reference Handler           cond. waiting
+  (java.lang.ref.Finalizer$FinalizerThread)0x127  Finalizer                   cond. waiting
+  (java.lang.Thread)0x126                         Signal Dispatcher           running
+Group main:
+  (java.lang.Thread)0x1                           main                        running (at breakpoint)
+  (java.lang.Thread)0x1b8                         Java Sound Event Dispatcher cond. waiting
+  (java.lang.Thread)0x1c0                         Java Sound Event Dispatcher cond. waiting
+  (java.lang.Thread)0x1e6                         Java Sound Sequencer        running
+main[1] eval this
+ this = "com.sun.media.sound.RealTimeSequencer@1abfbdc"
+main[1] dump locals
+com.sun.tools.example.debug.expr.ParseException: Name unknown: locals
+ locals = null
+main[1] locals
+Local variable information not available.  Compile with -g to generate variable information
+main[1] where
+  [1] com.sun.media.sound.RealTimeSequencer.setTickPosition (RealTimeSequencer.java:625)
+  [2] com.sun.media.sound.RealTimeSequencer.setSequence (RealTimeSequencer.java:195)
+  [3] RealTimeSequencerTest.before (RealTimeSequencerTest.java:286)
+  [4] RealTimeSequencerTest.main (RealTimeSequencerTest.java:389)
+main[1] cont
+Sequence set.
+> MidiPlayer.secondary(): starting keeda...
+MidiPlayer.main(): starting sequencer...
+
+Breakpoint hit: "thread=main", com.sun.media.sound.RealTimeSequencer.implStart(), line=1,179 bci=0
+
+main[1] where
+  [1] com.sun.media.sound.RealTimeSequencer.implStart (RealTimeSequencer.java:1,179)
+  [2] com.sun.media.sound.RealTimeSequencer.start (RealTimeSequencer.java:325)
+  [3] RealTimeSequencerTest.main (RealTimeSequencerTest.java:397)
+main[1] threads
+Group system:
+  (java.lang.ref.Reference$ReferenceHandler)0x128 Reference Handler                 cond. waiting
+  (java.lang.ref.Finalizer$FinalizerThread)0x127  Finalizer                         cond. waiting
+  (java.lang.Thread)0x126                         Signal Dispatcher                 running
+Group main:
+  (java.lang.Thread)0x1                           main                              running (at breakpoint)
+  (java.lang.Thread)0x1b8                         Java Sound Event Dispatcher       cond. waiting
+  (java.lang.Thread)0x1c0                         Java Sound Event Dispatcher       cond. waiting
+  (java.lang.Thread)0x1e6                         Java Sound Sequencer              cond. waiting
+  (com.sun.media.sound.MixerThread)0x1f6          Headspace mixer frame proc thread running
+  (RealTimeSequencerTest$4)0x204                  Thread-3                          running
+main[1] dump locals
+com.sun.tools.example.debug.expr.ParseException: Name unknown: locals
+ locals = null
+main[1] locals
+Local variable information not available.  Compile with -g to generate variable information
+main[1] dump this
+ this = {
+    DEBUG_PUMP: false
+    DEBUG_PUMP_ALL: false
+    RMF: true
+    eventDispatcher: instance of com.sun.media.sound.EventDispatcher(id=470)
+    info: instance of com.sun.media.sound.RealTimeSequencer$RealTimeSequencerInfo(id=471)
+    masterSyncModes: instance of javax.sound.midi.Sequencer$SyncMode[1] (id=472)
+    slaveSyncModes: instance of javax.sound.midi.Sequencer$SyncMode[1] (id=474)
+    masterSyncMode: instance of javax.sound.midi.Sequencer$SyncMode(id=475)
+    slaveSyncMode: instance of javax.sound.midi.Sequencer$SyncMode(id=476)
+    sequence: instance of javax.sound.midi.Sequence(id=477)
+    cacheTempoMPQ: -1.0
+    cacheTempoFactor: -1.0
+    trackMuted: null
+    trackSolo: null
+    tempoCache: instance of com.sun.media.sound.MidiUtils$TempoCache(id=478)
+    running: false
+    playThread: instance of com.sun.media.sound.RealTimeSequencer$PlayThread(id=479)
+    recording: false
+    recordingTracks: instance of java.util.ArrayList(id=480)
+    loopStart: 0
+    loopEnd: -1
+    loopCount: 0
+    metaEventListeners: instance of java.util.ArrayList(id=481)
+    controllerEventListeners: instance of java.util.ArrayList(id=482)
+    seqBridge: null
+    autoConnect: false
+    doAutoConnectAtNextOpen: false
+    autoConnectedReceiver: null
+    com.sun.media.sound.AbstractMidiDevice.TRACE_TRANSMITTER: false
+    com.sun.media.sound.AbstractMidiDevice.receiverList: null
+    com.sun.media.sound.AbstractMidiDevice.transmitterList: instance of com.sun.media.sound.AbstractMidiDevice$TransmitterList(id=517)
+    com.sun.media.sound.AbstractMidiDevice.traRecLock: instance of java.lang.Object(id=483)
+    com.sun.media.sound.AbstractMidiDevice.info: instance of com.sun.media.sound.RealTimeSequencer$RealTimeSequencerInfo(id=471)
+    com.sun.media.sound.AbstractMidiDevice.open: true
+    com.sun.media.sound.AbstractMidiDevice.openRefCount: -1
+    com.sun.media.sound.AbstractMidiDevice.openKeepingObjects: null
+    com.sun.media.sound.AbstractMidiDevice.id: 0
+}
+main[1] locals
+Local variable information not available.  Compile with -g to generate variable information
+main[1] where
+  [1] com.sun.media.sound.RealTimeSequencer.implStart (RealTimeSequencer.java:1,179)
+  [2] com.sun.media.sound.RealTimeSequencer.start (RealTimeSequencer.java:325)
+  [3] RealTimeSequencerTest.main (RealTimeSequencerTest.java:397)
+main[1] threads
+Group system:
+  (java.lang.ref.Reference$ReferenceHandler)0x128 Reference Handler                 cond. waiting
+  (java.lang.ref.Finalizer$FinalizerThread)0x127  Finalizer                         cond. waiting
+  (java.lang.Thread)0x126                         Signal Dispatcher                 running
+Group main:
+  (java.lang.Thread)0x1                           main                              running (at breakpoint)
+  (java.lang.Thread)0x1b8                         Java Sound Event Dispatcher       cond. waiting
+  (java.lang.Thread)0x1c0                         Java Sound Event Dispatcher       cond. waiting
+  (java.lang.Thread)0x1e6                         Java Sound Sequencer              cond. waiting
+  (com.sun.media.sound.MixerThread)0x1f6          Headspace mixer frame proc thread running
+  (RealTimeSequencerTest$4)0x204                  Thread-3                          running
+main[1] step in
+> 
+> where
+No thread specified.
+> ^\2011-11-27 19:25:24
+Full thread dump Java HotSpot(TM) Client VM (17.1-b03 mixed mode, sharing):
+
+"event-handler" prio=10 tid=0x09464800 nid=0x11a9 in Object.wait() [0xb421c000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x87560098> (a com.sun.tools.jdi.EventQueueImpl)
+	at java.lang.Object.wait(Object.java:485)
+	at com.sun.tools.jdi.EventQueueImpl.removeUnfiltered(EventQueueImpl.java:171)
+	- locked <0x87560098> (a com.sun.tools.jdi.EventQueueImpl)
+	at com.sun.tools.jdi.EventQueueImpl.remove(EventQueueImpl.java:78)
+	at com.sun.tools.jdi.EventQueueImpl.remove(EventQueueImpl.java:64)
+	at com.sun.tools.example.debug.tty.EventHandler.run(EventHandler.java:75)
+	at java.lang.Thread.run(Thread.java:662)
+
+"output reader" prio=10 tid=0x093ef400 nid=0x11a8 runnable [0xb426d000]
+   java.lang.Thread.State: RUNNABLE
+	at java.io.FileInputStream.readBytes(Native Method)
+	at java.io.FileInputStream.read(FileInputStream.java:199)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	- locked <0x875600d0> (a java.io.BufferedInputStream)
+	at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:264)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:306)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:158)
+	- locked <0x83c66178> (a java.io.InputStreamReader)
+	at java.io.InputStreamReader.read(InputStreamReader.java:167)
+	at java.io.BufferedReader.fill(BufferedReader.java:136)
+	at java.io.BufferedReader.read(BufferedReader.java:157)
+	- locked <0x83c66178> (a java.io.InputStreamReader)
+	at com.sun.tools.example.debug.tty.VMConnection.dumpStream(VMConnection.java:284)
+	at com.sun.tools.example.debug.tty.VMConnection.access$000(VMConnection.java:48)
+	at com.sun.tools.example.debug.tty.VMConnection$1.run(VMConnection.java:308)
+
+"output reader" prio=10 tid=0x093ee400 nid=0x11a7 runnable [0xb42be000]
+   java.lang.Thread.State: RUNNABLE
+	at java.io.FileInputStream.readBytes(Native Method)
+	at java.io.FileInputStream.read(FileInputStream.java:199)
+	at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:264)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:306)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:158)
+	- locked <0x83c6c2b0> (a java.io.InputStreamReader)
+	at java.io.InputStreamReader.read(InputStreamReader.java:167)
+	at java.io.BufferedReader.fill(BufferedReader.java:136)
+	at java.io.BufferedReader.read(BufferedReader.java:157)
+	- locked <0x83c6c2b0> (a java.io.InputStreamReader)
+	at com.sun.tools.example.debug.tty.VMConnection.dumpStream(VMConnection.java:284)
+	at com.sun.tools.example.debug.tty.VMConnection.access$000(VMConnection.java:48)
+	at com.sun.tools.example.debug.tty.VMConnection$1.run(VMConnection.java:308)
+
+"JDI Target VM Interface" daemon prio=10 tid=0x093d0800 nid=0x11a6 runnable [0xb430f000]
+   java.lang.Thread.State: RUNNABLE
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.read(SocketInputStream.java:129)
+	at java.net.SocketInputStream.read(SocketInputStream.java:182)
+	at com.sun.tools.jdi.SocketConnection.readPacket(SocketTransportService.java:393)
+	- locked <0x875601e0> (a java.lang.Object)
+	at com.sun.tools.jdi.TargetVM.run(TargetVM.java:99)
+	at java.lang.Thread.run(Thread.java:662)
+
+"JDI Internal Event Handler" daemon prio=10 tid=0x093cf400 nid=0x11a5 in Object.wait() [0xb4360000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x875602a8> (a com.sun.tools.jdi.EventQueueImpl)
+	at java.lang.Object.wait(Object.java:485)
+	at com.sun.tools.jdi.EventQueueImpl.removeUnfiltered(EventQueueImpl.java:171)
+	- locked <0x875602a8> (a com.sun.tools.jdi.EventQueueImpl)
+	at com.sun.tools.jdi.EventQueueImpl.removeInternal(EventQueueImpl.java:106)
+	at com.sun.tools.jdi.InternalEventHandler.run(InternalEventHandler.java:36)
+	at java.lang.Thread.run(Thread.java:662)
+
+"process reaper" daemon prio=10 tid=0x093d3800 nid=0x1199 runnable [0xb43b1000]
+   java.lang.Thread.State: RUNNABLE
+	at java.lang.UNIXProcess.waitForProcessExit(Native Method)
+	at java.lang.UNIXProcess.access$900(UNIXProcess.java:20)
+	at java.lang.UNIXProcess$1$1.run(UNIXProcess.java:132)
+
+"Low Memory Detector" daemon prio=10 tid=0x093e2800 nid=0x1197 runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"CompilerThread0" daemon prio=10 tid=0x093e0800 nid=0x1196 waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Signal Dispatcher" daemon prio=10 tid=0x093df000 nid=0x1195 waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Finalizer" daemon prio=10 tid=0x093d7400 nid=0x1194 in Object.wait() [0xb4962000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x87560530> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:118)
+	- locked <0x87560530> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:134)
+	at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:159)
+
+"Reference Handler" daemon prio=10 tid=0x093d5c00 nid=0x1193 in Object.wait() [0xb49b3000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x875605c0> (a java.lang.ref.Reference$Lock)
+	at java.lang.Object.wait(Object.java:485)
+	at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:116)
+	- locked <0x875605c0> (a java.lang.ref.Reference$Lock)
+
+"main" prio=10 tid=0x093b1000 nid=0x1191 runnable [0xb6c6f000]
+   java.lang.Thread.State: RUNNABLE
+	at java.io.FileInputStream.readBytes(Native Method)
+	at java.io.FileInputStream.read(FileInputStream.java:199)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	- locked <0x875632f8> (a java.io.BufferedInputStream)
+	at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:264)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:306)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:158)
+	- locked <0x87565ae8> (a java.io.InputStreamReader)
+	at java.io.InputStreamReader.read(InputStreamReader.java:167)
+	at java.io.BufferedReader.fill(BufferedReader.java:136)
+	at java.io.BufferedReader.readLine(BufferedReader.java:299)
+	- locked <0x87565ae8> (a java.io.InputStreamReader)
+	at java.io.BufferedReader.readLine(BufferedReader.java:362)
+	at com.sun.tools.example.debug.tty.TTY.<init>(TTY.java:693)
+	at com.sun.tools.example.debug.tty.TTY.main(TTY.java:1011)
+
+"VM Thread" prio=10 tid=0x093d4400 nid=0x1192 runnable 
+
+"VM Periodic Task Thread" prio=10 tid=0x093e6400 nid=0x1198 waiting on condition 
+
+2011-11-27 19:25:24
+Full thread dump Java HotSpot(TM) Client VM (17.1-b03 mixed mode):
+
+"Thread-3" prio=10 tid=0x09612400 nid=0x11b5 waiting for monitor entry [0xa48d1000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+	at com.sun.media.sound.RealTimeSequencer.setTickPosition(RealTimeSequencer.java:625)
+	- waiting to lockJNI global references: 1382
+
+Heap
+ def new generation   total 3456K, used 558K [0x83960000, 0x83d20000, 0x87560000)
+  eden space 3072K,   5% used [0x83960000, 0x8398bae0, 0x83c60000)
+  from space 384K, 100% used [0x83c60000, 0x83cc0000, 0x83cc0000)
+  to   space 384K,   0% used [0x83cc0000, 0x83cc0000, 0x83d20000)
+ tenured generation   total 7680K, used 289K [0x87560000, 0x87ce0000, 0x8ed60000)
+   the space 7680K,   3% used [0x87560000, 0x875a86b0, 0x875a8800, 0x87ce0000)
+ compacting perm gen  total 12288K, used 1505K [0x8ed60000, 0x8f960000, 0x92d60000)
+   the space 12288K,  12% used [0x8ed60000, 0x8eed8458, 0x8eed8600, 0x8f960000)
+    ro space 10240K,  61% used [0x92d60000, 0x93387500, 0x93387600, 0x93760000)
+    rw space 12288K,  60% used [0x93760000, 0x93e976f8, 0x93e97800, 0x94360000)
+
+ <0xa57330e0> (a com.sun.media.sound.RealTimeSequencer)
+	at com.sun.media.sound.RealTimeSequencer.setMicrosecondPosition(RealTimeSequencer.java:713)
+	- locked <0xa5733180> (a com.sun.media.sound.MidiUtils$TempoCache)
+	at RealTimeSequencerTest$4.run(RealTimeSequencerTest.java:393)
+
+"Headspace mixer frame proc thread" daemon prio=10 tid=0x09035000 nid=0x11b4 runnable [0xa4922000]
+   java.lang.Thread.State: RUNNABLE
+	at com.sun.media.sound.MixerThread.runNative(Native Method)
+	at com.sun.media.sound.MixerThread.run(MixerThread.java:113)
+
+"Java Sound Sequencer" prio=10 tid=0x09065400 nid=0x11af in Object.wait() [0xa4973000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0xa573c098> (a java.lang.Object)
+	at java.lang.Object.wait(Object.java:485)
+	at com.sun.media.sound.RealTimeSequencer$PlayThread.run(RealTimeSequencer.java:1708)
+	- locked <0xa573c098> (a java.lang.Object)
+	at java.lang.Thread.run(Thread.java:662)
+
+"Java Sound Event Dispatcher" daemon prio=10 tid=0x09026400 nid=0x11ae in Object.wait() [0xa49c4000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0xa57321b8> (a com.sun.media.sound.EventDispatcher)
+	at java.lang.Object.wait(Object.java:485)
+	at com.sun.media.sound.EventDispatcher.dispatchEvents(EventDispatcher.java:170)
+	- locked <0xa57321b8> (a com.sun.media.sound.EventDispatcher)
+	at com.sun.media.sound.EventDispatcher.run(EventDispatcher.java:210)
+	at java.lang.Thread.run(Thread.java:662)
+
+"Java Sound Event Dispatcher" daemon prio=10 tid=0x09026000 nid=0x11ad in Object.wait() [0xa4a15000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0xa5731f30> (a com.sun.media.sound.EventDispatcher)
+	at java.lang.Object.wait(Object.java:485)
+	at com.sun.media.sound.EventDispatcher.dispatchEvents(EventDispatcher.java:170)
+	- locked <0xa5731f30> (a com.sun.media.sound.EventDispatcher)
+	at com.sun.media.sound.EventDispatcher.run(EventDispatcher.java:210)
+	at java.lang.Thread.run(Thread.java:662)
+
+"Low Memory Detector" daemon prio=10 tid=0x08fd4c00 nid=0x11ab runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"CompilerThread0" daemon prio=10 tid=0x08fd3800 nid=0x11aa waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"JDWP Command Reader" daemon prio=10 tid=0x08fc6000 nid=0x11a4 runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"JDWP Event Helper Thread" daemon prio=10 tid=0x08fc4400 nid=0x11a3 runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"JDWP Transport Listener: dt_socket" daemon prio=10 tid=0x08fc1c00 nid=0x11a2 runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Signal Dispatcher" daemon prio=10 tid=0x08fba400 nid=0x11a1 waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Finalizer" daemon prio=10 tid=0x08fa8000 nid=0x11a0 in Object.wait() [0xa5258000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0xa55d0b20> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:118)
+	- locked <0xa55d0b20> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:134)
+	at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:159)
+
+"Reference Handler" daemon prio=10 tid=0x08fa6800 nid=0x119f in Object.wait() [0xa52a9000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0xa55d0a20> (a java.lang.ref.Reference$Lock)
+	at java.lang.Object.wait(Object.java:485)
+	at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:116)
+	- locked <0xa55d0a20> (a java.lang.ref.Reference$Lock)
+
+"main" prio=10 tid=0x08f5bc00 nid=0x119d waiting for monitor entry [0xb6ddf000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+	at com.sun.media.sound.MidiUtils$TempoCache.getTempoMPQAt(MidiUtils.java:326)
+	- waiting to lock <0xa5733180> (a com.sun.media.sound.MidiUtils$TempoCache)
+	at com.sun.media.sound.MidiUtils$TempoCache.getTempoMPQAt(MidiUtils.java:322)
+	at com.sun.media.sound.RealTimeSequencer$PlayThread.start(RealTimeSequencer.java:1591)
+	- locked <0xa573c078> (a com.sun.media.sound.RealTimeSequencer$PlayThread)
+	at com.sun.media.sound.RealTimeSequencer.implStart(RealTimeSequencer.java:1187)
+	at com.sun.media.sound.RealTimeSequencer.start(RealTimeSequencer.java:325)
+	- locked <0xa57330e0> (a com.sun.media.sound.RealTimeSequencer)
+	at RealTimeSequencerTest.main(RealTimeSequencerTest.java:397)
+
+"VM Thread" prio=10 tid=0x08fa4000 nid=0x119e runnable 
+
+"VM Periodic Task Thread" prio=10 tid=0x08fdcc00 nid=0x11ac waiting on condition 
+
+JNI global references: 3246
+
+
+Found one Java-level deadlock:
+=============================
+"Thread-3":
+  waiting to lock monitor 0x09062238 (object 0xa57330e0, a com.sun.media.sound.RealTimeSequencer),
+  which is held by "main"
+"main":
+  waiting to lock monitor 0x0906229c (object 0xa5733180, a com.sun.media.sound.MidiUtils$TempoCache),
+  which is held by "Thread-3"
+
+Java stack information for the threads listed above:
+===================================================
+"Thread-3":
+	at com.sun.media.sound.RealTimeSequencer.setTickPosition(RealTimeSequencer.java:625)
+	- waiting to lock <0xa57330e0> (a com.sun.media.sound.RealTimeSequencer)
+	at com.sun.media.sound.RealTimeSequencer.setMicrosecondPosition(RealTimeSequencer.java:713)
+	- locked <0xa5733180> (a com.sun.media.sound.MidiUtils$TempoCache)
+	at RealTimeSequencerTest$4.run(RealTimeSequencerTest.java:393)
+"main":
+	at com.sun.media.sound.MidiUtils$TempoCache.getTempoMPQAt(MidiUtils.java:326)
+	- waiting to lock <0xa5733180> (a com.sun.media.sound.MidiUtils$TempoCache)
+	at com.sun.media.sound.MidiUtils$TempoCache.getTempoMPQAt(MidiUtils.java:322)
+	at com.sun.media.sound.RealTimeSequencer$PlayThread.start(RealTimeSequencer.java:1591)
+	- locked <0xa573c078> (a com.sun.media.sound.RealTimeSequencer$PlayThread)
+	at com.sun.media.sound.RealTimeSequencer.implStart(RealTimeSequencer.java:1187)
+	at com.sun.media.sound.RealTimeSequencer.start(RealTimeSequencer.java:325)
+	- locked <0xa57330e0> (a com.sun.media.sound.RealTimeSequencer)
+	at RealTimeSequencerTest.main(RealTimeSequencerTest.java:397)
+
+Found 1 deadlock.
+
+Heap
+ def new generation   total 3456K, used 1679K [0xa55d0000, 0xa5990000, 0xa91d0000)
+  eden space 3072K,  54% used [0xa55d0000, 0xa5773e30, 0xa58d0000)
+  from space 384K,   0% used [0xa58d0000, 0xa58d0000, 0xa5930000)
+  to   space 384K,   0% used [0xa5930000, 0xa5930000, 0xa5990000)
+ tenured generation   total 7680K, used 0K [0xa91d0000, 0xa9950000, 0xb09d0000)
+   the space 7680K,   0% used [0xa91d0000, 0xa91d0000, 0xa91d0200, 0xa9950000)
+ compacting perm gen  total 12288K, used 2375K [0xb09d0000, 0xb15d0000, 0xb49d0000)
+   the space 12288K,  19% used [0xb09d0000, 0xb0c21f18, 0xb0c22000, 0xb15d0000)
+No shared spaces configured.

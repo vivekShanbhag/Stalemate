@@ -1,0 +1,14 @@
+
+In this directory we share a program that can deadlock the JVM. 
+This bug has since been fixed in Java 1.7. Earlier versions of Java1.6 deadlock.
+
+In another directory herein:  there are 4 more programs that all use the MIDI
+API to deadlock the JVM as our analysis predicts. In that subdirectory there
+is a README file that elaborates about those programs and deadlocks.
+ 
+Source Files:	KTest2.java
+Class Files:	KTest2$1.class KTest2.class
+Deadlocked JVM:	KTest2.stack
+Bug Id:		7118809
+Command:	jdb KTest2
+Additional actions (if any):	As evidenced in KTest2.stack

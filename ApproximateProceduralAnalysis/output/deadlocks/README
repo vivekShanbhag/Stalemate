@@ -1,0 +1,9 @@
+
+In this directory we share a program that can deadlock the JVM. 
+
+Source Files:	Dl.java Test.java
+class  Files:	Dl$1.class Dl$2.class Dl.class Test.class
+Deadlocked JVM:	Dl.stack
+Bug-Id:		6588239
+Command:	java Dl Test
+Additional actions (if any): Not Necessry.

@@ -1,0 +1,20 @@
+
+In this directory we share 2 CORBA programs that can deadlock the JVM. 
+ 
+
+Source Files:	CorbaDeadlock.java
+Class Files:	CorbaDeadlock$1.class CorbaDeadlock$2.class
+		CorbaDeadlock.class
+Source Files:	CorbaDeadlock.stack.1.7.0	CorbaDeadlock.stack.bak
+Bug Id:		Review ID: 2441629
+Command:	jdb CorbaDeadlock
+Additional actions (if any):	As evidenced in CorbaDeadlock.stack.1.7.0 
+
+
+Source Files:	CorbaEDeadlock.java
+Class Files:	CorbaEDeadlock$1.class CorbaEDeadlock$2.class
+		CorbaEDeadlock.class
+Source Files:	CorbaEDeadlock.stack.1.7.0	CorbaEDeadlock.stack
+Bug Id:		Review ID: Awaited
+Command:	jdb CorbaEDeadlock
+Additional actions (if any):	As evidenced in CorbaEDeadlock.stack.1.7.0 

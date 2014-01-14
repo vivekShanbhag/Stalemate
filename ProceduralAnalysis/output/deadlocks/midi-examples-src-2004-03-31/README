@@ -1,0 +1,39 @@
+A DESCRIPTION OF THE PROBLEM :
+The midi-examples-src-2004-03-31 zip file available from www.jsresources.org is
+meant to demonstrate how to use various Sound-API classes offered in the
+Java-library. A file (MidiPlayer.java) from that is modified, as per the
+code below, to call it RealTimeSequencerTest[234]?.java, and compiled, and
+executed as per instructions below to deadlock its hosting JVM.
+
+
+unzip the midi-examples-src-2004-03-31 
+
+In the src directory 2 files are changed from the original:
+	RealTimeSequencerTest.java
+	MidiPlayer.java
+
+4 New files are added (all minor varients of MidiPlayer.java):
+	RealTimeSequencerTest.java
+	RealTimeSequencerTest2.java
+	RealTimeSequencerTest3.java
+	RealTimeSequencerTest4.java
+
+barkwall.mid, take5.mid, used as data-file for input
+	is downloaded from http://users0.ee.net/lstone/midi.htm 
+
+There are a few stack-dump files that are produced from a deadlocked JVM:
+	deadlock.stack	: jdb -classpath ..:. RealTimeSequencerTest\
+			      -S "Real Time Sequencer"  ../take5.mid
+	deadlock2.stack	: jdb -classpath ..:. RealTimeSequencerTest2\
+			      -S "Real Time Sequencer" ../take5.mid
+	deadlock3.stack	: javac RealTimeSequencerTest3.java DumpReceiver.java\
+			      MidiCommon.java ../gnu/getopt/Getopt.java\
+			      ../gnu/getopt/LongOpt.java;\
+			      jdb -classpath ..:. RealTimeSequencerTest3\
+			      -S "Real Time Sequencer" ../barkwall.mid
+	deadlock4.1.stack: jdb -classpath ..:. RealTimeSequencerTest4\
+			      -S "Real Time Sequencer" ../../barkwall.mid
+	deadlock4.2.stack: jdb -classpath ..:. RealTimeSequencerTest4\
+			      -S "Real Time Sequencer" ../../barkwall.mid
+	deadlock4.3.stack: jdb -classpath ..:. RealTimeSequencerTest4\
+			      -S "Real Time Sequencer" ../../barkwall.mid
