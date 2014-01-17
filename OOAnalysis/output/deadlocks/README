@@ -18,3 +18,13 @@ Source Files:	CorbaEDeadlock.stack.1.7.0	CorbaEDeadlock.stack
 Bug Id:		Review ID: Awaited
 Command:	jdb CorbaEDeadlock
 Additional actions (if any):	As evidenced in CorbaEDeadlock.stack.1.7.0 
+
+Our icse-poster-2014 submission: For brevity in the paper, we have
+refered to CorbaDeadlock.java by the name "TcPdh" that stands for
+the names of the two types involved in this deadlock:
+org.omg.CORBA.TypeCode and com.sun.org.omg.CORBA.ParameterDescriptionHelper 
+
+Similarly, we have refered to CorbaEDeadlock.java by the name "TcEdh" that
+stands for the names of the two types involved in this deadlock:
+org.omg.CORBA.TypeCode and com.sun.org.omg.CORBA.ExceptionDescriptionHelper 
+

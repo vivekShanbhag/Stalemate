@@ -5,7 +5,6 @@ Java-library. A file (MidiPlayer.java) from that is modified, as per the
 code below, to call it RealTimeSequencerTest[234]?.java, and compiled, and
 executed as per instructions below to deadlock its hosting JVM.
 
-
 unzip the midi-examples-src-2004-03-31 
 
 In the src directory 2 files are changed from the original:
@@ -37,3 +36,26 @@ There are a few stack-dump files that are produced from a deadlocked JVM:
 			      -S "Real Time Sequencer" ../../barkwall.mid
 	deadlock4.3.stack: jdb -classpath ..:. RealTimeSequencerTest4\
 			      -S "Real Time Sequencer" ../../barkwall.mid
+
+Our icse-poster-2014 submission: For brevity in the paper, we have
+refered to 4 programs RealTimeSequencerTest[234]?.java by the names
+that are derieved from the names of the types of objects involved in
+the deadlock:
+
+RealTimeSeqiencerTest.java is refered as "RtsTc" since its deadlock is on types:
+com.sun.media.sound.RealTimeSequencer and com.sun.media.sound.MidiUtils$TempoCache
+
+RealTimeSeqiencerTest2.java is refered as "RtsDp1", whereas it ought to
+have been called: TcDp1 since its deadlock is on types:
+com.sun.media.sound.MidiUtils$TempoCache and
+com.sun.media.sound.RealTimeSequencer$DataPump
+
+RealTimeSeqiencerTest3.java is refered as "RtsDp2", whereas it ought to
+have been called: TcDp2 since its deadlock is on types:
+com.sun.media.sound.RealTimeSequencer$DataPump and
+com.sun.media.sound.MidiUtils$TempoCache
+
+RealTimeSeqiencerTest4.java is refered as "RtsTcDp" since its deadlock is on types:
+com.sun.media.sound.RealTimeSequencer, com.sun.media.sound.MidiUtils$TempoCache,
+and com.sun.media.sound.RealTimeSequencer$DataPump
+

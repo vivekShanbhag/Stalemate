@@ -12,3 +12,9 @@ Deadlocked JVM:	KTest2.stack
 Bug Id:		7118809
 Command:	jdb KTest2
 Additional actions (if any):	As evidenced in KTest2.stack
+
+Our icse-poster-2014 submission: For brevity in the paper, we have
+refered to KTest2.java by the name "RcCt" that stands for the names
+of the two types of objects involved in this deadlock:
+sun.security.krb5.internal.rcache.ReplayCache and
+sun.security.krb5.internal.rcache.CacheTable
