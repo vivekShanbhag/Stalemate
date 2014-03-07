@@ -45,15 +45,13 @@ the deadlock:
 RealTimeSeqiencerTest.java is refered as "RtsTc" since its deadlock is on types:
 com.sun.media.sound.RealTimeSequencer and com.sun.media.sound.MidiUtils$TempoCache
 
-RealTimeSeqiencerTest2.java is refered as "RtsDp1", whereas it ought to
-have been called: TcDp1 since its deadlock is on types:
+RealTimeSeqiencerTest2.java is refered as "TcDp1" since its deadlock is on types:
 com.sun.media.sound.MidiUtils$TempoCache and
 com.sun.media.sound.RealTimeSequencer$DataPump
 
-RealTimeSeqiencerTest3.java is refered as "RtsDp2", whereas it ought to
-have been called: TcDp2 since its deadlock is on types:
-com.sun.media.sound.RealTimeSequencer$DataPump and
-com.sun.media.sound.MidiUtils$TempoCache
+RealTimeSeqiencerTest3.java is refered as "TcDp2" since its deadlock is on types:
+com.sun.media.sound.MidiUtils$TempoCache and
+com.sun.media.sound.RealTimeSequencer$DataPump
 
 RealTimeSeqiencerTest4.java is refered as "RtsTcDp" since its deadlock is on types:
 com.sun.media.sound.RealTimeSequencer, com.sun.media.sound.MidiUtils$TempoCache,
