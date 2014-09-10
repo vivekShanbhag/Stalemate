@@ -1,0 +1,65 @@
+Found one Java-level deadlock:
+=============================
+"Thread-1":
+  waiting to lock monitor 0x08befed0 (object 0xa3a83060, a java.io.PrintStream),
+  which is held by "Thread-0"
+"Thread-0":
+  waiting to lock monitor 0x08bf1708 (object 0x8043e1f8, a java.lang.Class),
+  which is held by "Thread-1"
+
+Java stack information for the threads listed above:
+===================================================
+"Thread-1":
+	at java.io.PrintStream.println(PrintStream.java:756)
+	- waiting to lock <0xa3a83060> (a java.io.PrintStream)
+	at sun.util.calendar.ZoneInfoFile.getZoneInfoMappings(ZoneInfoFile.java:1005)
+	at sun.util.calendar.ZoneInfoFile.getZoneAliases(ZoneInfoFile.java:780)
+	at sun.util.calendar.ZoneInfo.getAliasTable(ZoneInfo.java:784)
+	- locked <0x8043e1f8> (a java.lang.Class for sun.util.calendar.ZoneInfo)
+	at ZoneInfoPrintStreamDeadlock$2.run(ZoneInfoPrintStreamDeadlock.java:42)
+"Thread-0":
+	at sun.util.calendar.ZoneInfo.getAliasTable(ZoneInfo.java:782)
+	- waiting to lock <0x8043e1f8> (a java.lang.Class for sun.util.calendar.ZoneInfo)
+	at sun.util.calendar.ZoneInfo.getTimeZone(ZoneInfo.java:612)
+	at java.util.TimeZone.getTimeZone(TimeZone.java:464)
+	at java.util.TimeZone.setDefaultZone(TimeZone.java:561)
+	- locked <0x8043d380> (a java.lang.Class for java.util.TimeZone)
+	at java.util.TimeZone.getDefaultRef(TimeZone.java:528)
+	at java.util.Date.normalize(Date.java:1176)
+	at java.util.Date.toString(Date.java:1010)
+	at java.lang.String.valueOf(String.java:2826)
+	at java.lang.StringBuilder.append(StringBuilder.java:115)
+	at sun.rmi.server.UnicastServerRef.logCallException(UnicastServerRef.java:465)
+	- locked <0xa3a83060> (a java.io.PrintStream)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:327)
+	at ZoneInfoPrintStreamDeadlock$1.run(ZoneInfoPrintStreamDeadlock.java:35)
+
+Found 1 deadlock.
+
+Heap
+ PSYoungGen      total 14144K, used 1216K [0xa3a70000, 0xa4a30000, 0xb3670000)
+  eden space 12160K, 10% used [0xa3a70000,0xa3ba00d8,0xa4650000)
+  from space 1984K, 0% used [0xa4840000,0xa4840000,0xa4a30000)
+  to   space 1984K, 0% used [0xa4650000,0xa4650000,0xa4840000)
+ PSOldGen        total 32256K, used 0K [0x84270000, 0x861f0000, 0xa3a70000)
+  object space 32256K, 0% used [0x84270000,0x84270000,0x861f0000)
+ PSPermGen       total 16384K, used 2490K [0x80270000, 0x81270000, 0x84270000)
+  object space 16384K, 15% used [0x80270000,0x804debc0,0x81270000)
+
+[1589:1589:0523/042828:ERROR:omnibox_view_gtk.cc(431)] Not implemented reached in virtual void OmniboxViewGtk::ApplyCaretVisibility()
+^Z
+[2]+  Stopped                 jdb -Xshare:off -Xint -Dsun.rmi.server.exceptionTrace=true -Dsun.rmi.log.useOld=true -Duser.timezone=GMT_TimbuckThree -Djava.rmi.server.logCalls=false -Djaxp.debug=true ZoneInfoPrintStreamDeadlock
+ceems@ubuntu:~/phd-new/thesis/last-minus/oopsla/oopsla$ fg
+jdb -Xshare:off -Xint -Dsun.rmi.server.exceptionTrace=true -Dsun.rmi.log.useOld=true -Duser.timezone=GMT_TimbuckThree -Djava.rmi.server.logCalls=false -Djaxp.debug=true ZoneInfoPrintStreamDeadlock
+
+> 
+> 
+> clear
+Breakpoints set:
+	breakpoint sun.util.calendar.ZoneInfoFile.getZoneAliases
+	breakpoint java.util.Date.toString
+	breakpoint java.util.TimeZone.getDisplayName
+	breakpoint java.util.TimeZone.getDisplayNames
+> [1589:1589:0523/235152:ERROR:omnibox_view_gtk.cc(431)] Not implemented reached in virtual void OmniboxViewGtk::ApplyCaretVisibility()
+
+

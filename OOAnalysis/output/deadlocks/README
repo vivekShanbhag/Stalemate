@@ -1,21 +1,69 @@
 
-In this directory we share 2 CORBA programs that can deadlock the JVM. 
- 
+In this directory we share 7 CORBA programs and 3 Core-Java programs
+that can deadlock the JVM. 
+
+In general the  deadlock prediction fetched from Stalemate execution is
+pasted as a comment at the top of the Java source.
+
+On our machines, most of the CORBA programs "readily" deadlock within
+the first few executions. Except the CorbaSmhDeadlock program. The
+corresponding `stack' file demonstrates how, using jdb, and given the
+prediction at the top of the file, the execution can be "guided" into
+its deadlocked state.
+
+Source Files:	CorbaAdhDeadlock.java
+Class Files:	CorbaAdhDeadlock$1.class CorbaAdhDeadlock$2.class
+		CorbaAdhDeadlock.class
+Stack Files:	CorbaAdhDeadlock.stack
+Bug Id:		Review ID: JI-9013122
+Command:	java CorbaAdhDeadlock
+Additional actions (if any):	As evidenced in CorbaAdhDeadlock.stack
+
+Source Files:	CorbaIhDeadlock.java
+Class Files:	CorbaIhDeadlock$1.class CorbaIhDeadlock$2.class
+		CorbaIhDeadlock.class
+Stack Files:	CorbaIhDeadlock.stack
+Bug Id:		Review ID: JI-9013123
+Command:	java CorbaIhDeadlock
+Additional actions (if any):	As evidenced in CorbaIhDeadlock.stack
+
+Source Files:	CorbaOdhDeadlock.java
+Class Files:	CorbaOdhDeadlock$1.class CorbaOdhDeadlock$2.class
+		CorbaOdhDeadlock.class
+Stack Files:	CorbaOdhDeadlock.stack
+Bug Id:		Review ID: JI-9013124
+Command:	java CorbaOdhDeadlock
+Additional actions (if any):	As evidenced in CorbaOdhDeadlock.stack
+
+Source Files:	CorbaVmhDeadlock.java
+Class Files:	CorbaVmhDeadlock$1.class CorbaVmhDeadlock$2.class
+		CorbaVmhDeadlock.class
+Stack Files:	CorbaVmhDeadlock.stack
+Bug Id:		Review ID: JI-9013126
+Command:	java CorbaVmhDeadlock
+Additional actions (if any):	As evidenced in CorbaVmhDeadlock.stack
+
+Source Files:	CorbaSmhDeadlock.java
+Class Files:	CorbaSmhDeadlock$1.class CorbaSmhDeadlock$2.class
+		CorbaSmhDeadlock.class
+Stack Files:	CorbaSmhDeadlock.stack
+Bug Id:		Review ID: JI-9013168
+Command:	jdb CorbaSmhDeadlock
+Additional actions (if any):	As evidenced in CorbaSmhDeadlock.stack
 
 Source Files:	CorbaDeadlock.java
 Class Files:	CorbaDeadlock$1.class CorbaDeadlock$2.class
 		CorbaDeadlock.class
-Source Files:	CorbaDeadlock.stack.1.7.0	CorbaDeadlock.stack.bak
-Bug Id:		Review ID: 2441629
+Stack Files:	CorbaDeadlock.stack.1.7.0	CorbaDeadlock.stack.bak
+Bug Id:		Review ID: JI-9001539 / 2441629
 Command:	jdb CorbaDeadlock
 Additional actions (if any):	As evidenced in CorbaDeadlock.stack.1.7.0 
-
 
 Source Files:	CorbaEDeadlock.java
 Class Files:	CorbaEDeadlock$1.class CorbaEDeadlock$2.class
 		CorbaEDeadlock.class
-Source Files:	CorbaEDeadlock.stack.1.7.0	CorbaEDeadlock.stack
-Bug Id:		Review ID: Awaited
+Stack Files:	CorbaEDeadlock.stack.1.7.0	CorbaEDeadlock.stack
+Bug Id:		Review ID: JI-9004433
 Command:	jdb CorbaEDeadlock
 Additional actions (if any):	As evidenced in CorbaEDeadlock.stack.1.7.0 
 
@@ -28,3 +76,76 @@ Similarly, we have refered to CorbaEDeadlock.java by the name "TcEdh" that
 stands for the names of the two types involved in this deadlock:
 org.omg.CORBA.TypeCode and com.sun.org.omg.CORBA.ExceptionDescriptionHelper 
 
+Source Files:   AnotherPropDeadlock.java AnotherPropDeadlock.stack
+Class Files:    AnotherPropDeadlock$1.class AnotherPropDeadlock$2.class
+                AnotherPropDeadlock.class
+Deadlocked JVM: AnotherPropDeadlock.stack
+Bug-Id:         Not filed, since this program doesnot deadlock the JVM 1.7.0.
+Command:        jdb -Dsun.rmi.server.exceptionTrace=true\
+                -Dsun.rmi.log.useOld=true -Djava.rmi.server.logCalls=false\
+                -Djaxp.debug=true AnotherPropDeadlock
+Additional actions (if any):    As evidenced in AnotherPropDeadlock.stack.
+
+
+Source Files:   TimeZonePrintStreamDeadlock.java
+Class Files:    TimeZonePrintStreamDeadlock$1.class
+                TimeZonePrintStreamDeadlock$2.class
+                TimeZonePrintStreamDeadlock.class
+Stack Files:    TimeZonePrintStreamDeadlock.stack.7.0
+                TimeZonePrintStreamDeadlock.stack.7.0.bak
+Bug Id:         Review ID: 2441639 / JI-9001540
+Command:        /usr/local/share/jdk1.7.0_10/bin/jdb -Xshare:off -Xint\
+                -Dsun.rmi.server.exceptionTrace=true -Dsun.rmi.log.useOld=true\
+                -Duser.timezone=GMT_TimbuckThree\
+                -Djava.rmi.server.logCalls=false -Djaxp.debug=true\
+                TimeZonePrintStreamDeadlock
+Additional actions (if any):    Use any binary file editor to clobber
+                the First byte of file: jre/lib/zi/ZoneInfoMappings
+                When successfully done, Notice the following:
+/usr/local/share/jdk1.7.0_10/jre/lib/zi$ od -c ZoneInfoMappings| head -n 1
+0000000   r   a   v   a   z   m  \0 001   D  \0  \f   t   z   d   a   t
+/usr/local/share/jdk1.7.0_10/jre/lib/zi$ od -c /usr/local/share/jdk1.6.0_35/jre/lib/zi/ZoneInfoMappings | head -n 1
+0000000   j   a   v   a   z   m  \0 001   D  \0  \f   t   z   d   a   t
+/usr/local/share/jdk1.7.0_10/jre/lib/zi$
+
+
+Source Files:   ZoneInfoPrintStreamDeadlock.java
+Class Files:    ZoneInfoPrintStreamDeadlock$1.class
+                ZoneInfoPrintStreamDeadlock$2.class
+                ZoneInfoPrintStreamDeadlock.class
+Stack Files:    ZoneInfoPrintStreamDeadlock.stack.7.0
+                ZoneInfoPrintStreamDeadlock.stack.7.0.bak
+Bug Id:         Review ID: JI-9004227
+Command:        /usr/local/share/jdk1.7.0_10/bin/jdb -Xshare:off -Xint\
+                -Dsun.rmi.server.exceptionTrace=true -Dsun.rmi.log.useOld=true\
+                -Duser.timezone=GMT_TimbuckThree\
+                -Djava.rmi.server.logCalls=false -Djaxp.debug=true\
+                ZoneInfoPrintStreamDeadlock
+Additional actions (if any):    Use any binary file editor to clobber
+                the First byte of file: jre/lib/zi/ZoneInfoMappings
+                When successfully done, Notice the following:
+/usr/local/share/jdk1.7.0_10/jre/lib/zi$ od -c ZoneInfoMappings| head -n 1
+0000000   r   a   v   a   z   m  \0 001   D  \0  \f   t   z   d   a   t
+/usr/local/share/jdk1.7.0_10/jre/lib/zi$ od -c /usr/local/share/jdk1.6.0_35/jre/lib/zi/ZoneInfoMappings | head -n 1
+0000000   j   a   v   a   z   m  \0 001   D  \0  \f   t   z   d   a   t
+/usr/local/share/jdk1.7.0_10/jre/lib/zi$
+
+
+Source Files:   TzZiPsDeadlock.java
+Class Files:    TzZiPsDeadlock$1.class
+                TzZiPsDeadlock$2.class
+                TzZiPsDeadlock.class
+Stack Files:    TzZiPsDeadlock.stack.1.7.0
+Bug Id:         Review ID: JI-9004229
+Command:        /usr/local/share/jdk1.7.0_10/bin/jdb -Xshare:off -Xint\
+                -Dsun.rmi.server.exceptionTrace=true -Dsun.rmi.log.useOld=true\
+                -Duser.timezone=GMT_TimbuckThree\
+                -Djava.rmi.server.logCalls=false -Djaxp.debug=true TzZiPsDeadlock
+Additional actions (if any):    Use any binary file editor to clobber
+                the First byte of file: jre/lib/zi/ZoneInfoMappings
+                When successfully done, Notice the following:
+/usr/local/share/jdk1.7.0_10/jre/lib/zi$ od -c ZoneInfoMappings| head -n 1
+0000000   r   a   v   a   z   m  \0 001   D  \0  \f   t   z   d   a   t
+/usr/local/share/jdk1.7.0_10/jre/lib/zi$ od -c /usr/local/share/jdk1.6.0_35/jre/lib/zi/ZoneInfoMappings | head -n 1
+0000000   j   a   v   a   z   m  \0 001   D  \0  \f   t   z   d   a   t
+/usr/local/share/jdk1.7.0_10/jre/lib/zi$

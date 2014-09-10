@@ -1,0 +1,228 @@
+/usr/local/share/jdk1.7.0_10/bin/jdb -Xshare:off -Xint -Dsun.rmi.server.exceptionTrace=true -Dsun.rmi.log.ud=true -Duser.timezone=GMT_TimbuckThree -Djava.rmi.server.logCalls=false -Djaxp.debug=true TzZiPsDeadlock
+Initializing jdb ...
+> stop in java.util.TimeZone.getTimeZone (java.lang.String, boolean)
+Deferring breakpoint java.util.TimeZone.getTimeZone(java.lang.String, boolean).
+It will be set after the class is loaded.
+> stop in sun.util.calendar.ZoneInfoFile.getZoneAliases
+Deferring breakpoint sun.util.calendar.ZoneInfoFile.getZoneAliases.
+It will be set after the class is loaded.
+> stop in sun.rmi.server.UnicastServerRef.logCallException
+Deferring breakpoint sun.rmi.server.UnicastServerRef.logCallException.
+It will be set after the class is loaded.
+> run
+run TzZiPsDeadlock
+Set uncaught java.lang.Throwable
+Set deferred uncaught java.lang.Throwable
+> 
+VM Started: Set deferred breakpoint sun.rmi.server.UnicastServerRef.logCallException
+Set deferred breakpoint java.util.TimeZone.getTimeZone(java.lang.String, boolean)
+Set deferred breakpoint sun.util.calendar.ZoneInfoFile.getZoneAliases
+
+Breakpoint hit: "thread=Thread-2", sun.util.calendar.ZoneInfoFile.getZoneAliases(), line=798 bci=0
+
+Thread-2[1] threads
+Group system:
+  (java.lang.ref.Reference$ReferenceHandler)0x150 Reference Handler cond. waiting
+  (java.lang.ref.Finalizer$FinalizerThread)0x14f  Finalizer         cond. waiting
+  (java.lang.Thread)0x14e                         Signal Dispatcher running
+Group main:
+  (TzZiPsDeadlock$1)0x176                         Thread-0          running
+  (TzZiPsDeadlock$2)0x183                         Thread-1          running
+  (TzZiPsDeadlock$3)0x185                         Thread-2          running (at breakpoint)
+  (java.lang.Thread)0x186                         DestroyJavaVM     running
+Thread-2[1] threadlocks
+Monitor information for thread Thread-2:
+  Owned monitor: instance of java.lang.Class(reflected class=sun.util.calendar.ZoneInfo, id=404)
+  Not waiting for a monitor
+Thread-2[1] suspend 0x185
+Thread-2[1] cont
+> 
+Breakpoint hit: "thread=Thread-1", java.util.TimeZone.getTimeZone(), line=571 bci=0
+
+Thread-1[1] threadlocks
+Monitor information for thread Thread-1:
+  Owned monitor: instance of java.lang.Class(reflected class=java.util.TimeZone, id=403)
+  Not waiting for a monitor
+Thread-1[1] threads
+Group system:
+  (java.lang.ref.Reference$ReferenceHandler)0x150 Reference Handler cond. waiting
+  (java.lang.ref.Finalizer$FinalizerThread)0x14f  Finalizer         cond. waiting
+  (java.lang.Thread)0x14e                         Signal Dispatcher running
+Group main:
+  (TzZiPsDeadlock$1)0x176                         Thread-0          running
+  (TzZiPsDeadlock$2)0x183                         Thread-1          running (at breakpoint)
+  (TzZiPsDeadlock$3)0x185                         Thread-2          running (at breakpoint)
+  (java.lang.Thread)0x186                         DestroyJavaVM     running
+Thread-1[1] suspend 0x183
+Thread-1[1] cont
+> 
+Breakpoint hit: "thread=Thread-0", sun.rmi.server.UnicastServerRef.logCallException(), line=470 bci=0
+
+Thread-0[1] threadlocks
+Monitor information for thread Thread-0:
+  No monitors owned
+  Not waiting for a monitor
+Thread-0[1] stop in java.util.Date.toString
+Set breakpoint java.util.Date.toString
+Thread-0[1] cont
+> 
+
+Breakpoint hit: "thread=Thread-0", java.util.Date.toString(), line=1,027 bci=0
+
+Thread-0[1] threads
+Group system:
+  (java.lang.ref.Reference$ReferenceHandler)0x150 Reference Handler cond. waiting
+  (java.lang.ref.Finalizer$FinalizerThread)0x14f  Finalizer         cond. waiting
+  (java.lang.Thread)0x14e                         Signal Dispatcher running
+Group main:
+  (TzZiPsDeadlock$1)0x176                         Thread-0          running (at breakpoint)
+  (TzZiPsDeadlock$2)0x183                         Thread-1          running (at breakpoint)
+  (TzZiPsDeadlock$3)0x185                         Thread-2          running (at breakpoint)
+  (java.lang.Thread)0x186                         DestroyJavaVM     running
+Thread-0[1] threadlocks
+Monitor information for thread Thread-0:
+  Owned monitor: instance of java.io.PrintStream(id=632)
+  Not waiting for a monitor
+Thread-0[1] resume 0x183 
+Thread-0[1] resume 0x185
+Thread-0[1] cont
+> ^\2013-05-24 06:07:29
+Full thread dump Java HotSpot(TM) Server VM (23.6-b04 interpreted mode):
+
+"DestroyJavaVM" prio=10 tid=0x7e865c00 nid=0x2f9e waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Thread-2" prio=10 tid=0x7e864400 nid=0x2fb3 waiting for monitor entry [0x7e444000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+	at java.io.PrintStream.println(PrintStream.java:806)
+	- waiting to lock <0xa49cf5f8> (a java.io.PrintStream)
+	at sun.util.calendar.ZoneInfoFile.getZoneInfoMappings(ZoneInfoFile.java:1023)
+	at sun.util.calendar.ZoneInfoFile.getZoneAliases(ZoneInfoFile.java:798)
+	at sun.util.calendar.ZoneInfo.getAliasTable(ZoneInfo.java:838)
+	- locked <0xa4b1d0e0> (a java.lang.Class for sun.util.calendar.ZoneInfo)
+	at TzZiPsDeadlock$3.run(TzZiPsDeadlock.java:102)
+
+"Thread-1" prio=10 tid=0x7e863000 nid=0x2fb2 waiting for monitor entry [0x7e495000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+	at sun.util.calendar.ZoneInfo.getAliasTable(ZoneInfo.java:836)
+	- waiting to lock <0xa4b1d0e0> (a java.lang.Class for sun.util.calendar.ZoneInfo)
+	at sun.util.calendar.ZoneInfo.getTimeZone(ZoneInfo.java:667)
+	at java.util.TimeZone.getTimeZone(TimeZone.java:571)
+	at java.util.TimeZone.setDefaultZone(TimeZone.java:668)
+	- locked <0xa4b1d000> (a java.lang.Class for java.util.TimeZone)
+	at java.util.TimeZone.getDefaultRef(TimeZone.java:635)
+	at java.util.TimeZone.getDefault(TimeZone.java:622)
+	at com.sun.java.util.jar.pack.PackerImpl.pack(PackerImpl.java:89)
+	at TzZiPsDeadlock$2.run(TzZiPsDeadlock.java:95)
+
+"Thread-0" prio=10 tid=0x7e861400 nid=0x2fb1 waiting for monitor entry [0x7e4e6000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+	at java.util.TimeZone.getDefaultInAppContext(TimeZone.java:734)
+	- waiting to lock <0xa4b1d000> (a java.lang.Class for java.util.TimeZone)
+	at java.util.TimeZone.getDefaultRef(TimeZone.java:630)
+	at java.util.Date.normalize(Date.java:1193)
+	at java.util.Date.toString(Date.java:1027)
+	at java.lang.String.valueOf(String.java:2854)
+	at java.lang.StringBuilder.append(StringBuilder.java:128)
+	at sun.rmi.server.UnicastServerRef.logCallException(UnicastServerRef.java:484)
+	- locked <0xa49cf5f8> (a java.io.PrintStream)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:346)
+	at TzZiPsDeadlock$1.run(TzZiPsDeadlock.java:88)
+
+"Service Thread" daemon prio=10 tid=0x7e84bc00 nid=0x2faf runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread1" daemon prio=10 tid=0x7e849c00 nid=0x2fae waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread0" daemon prio=10 tid=0x7e847c00 nid=0x2fad waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"JDWP Command Reader" daemon prio=10 tid=0x088edc00 nid=0x2fa7 runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"JDWP Event Helper Thread" daemon prio=10 tid=0x7e846000 nid=0x2fa6 runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"JDWP Transport Listener: dt_socket" daemon prio=10 tid=0x7e843800 nid=0x2fa5 runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Signal Dispatcher" daemon prio=10 tid=0x7e83b000 nid=0x2fa4 waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Finalizer" daemon prio=10 tid=0x7e800c00 nid=0x2fa3 in Object.wait() [0x7e97a000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0xa49b5698> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:135)
+	- locked <0xa49b5698> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:151)
+	at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:177)
+
+"Reference Handler" daemon prio=10 tid=0x088e9000 nid=0x2fa2 in Object.wait() [0x7e9cb000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0xa49b5270> (a java.lang.ref.Reference$Lock)
+	at java.lang.Object.wait(Object.java:503)
+	at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:133)
+	- locked <0xa49b5270> (a java.lang.ref.Reference$Lock)
+
+"VM Thread" prio=10 tid=0x088e3400 nid=0x2fa1 runnable 
+
+"GC task thread#0 (ParallelGC)" prio=10 tid=0x087cc000 nid=0x2f9f runnable 
+
+"GC task thread#1 (ParallelGC)" prio=10 tid=0x087cd800 nid=0x2fa0 runnable 
+
+"VM Periodic Task Thread" prio=10 tid=0x7e84dc00 nid=0x2fb0 waiting on condition 
+
+JNI global references: 2407
+
+
+Found one Java-level deadlock:
+=============================
+"Thread-2":
+  waiting to lock monitor 0x7e89630c (object 0xa49cf5f8, a java.io.PrintStream),
+  which is held by "Thread-0"
+"Thread-0":
+  waiting to lock monitor 0x088ecc2c (object 0xa4b1d000, a java.lang.Class),
+  which is held by "Thread-1"
+"Thread-1":
+  waiting to lock monitor 0x088ed848 (object 0xa4b1d0e0, a java.lang.Class),
+  which is held by "Thread-2"
+
+Java stack information for the threads listed above:
+===================================================
+"Thread-2":
+	at java.io.PrintStream.println(PrintStream.java:806)
+	- waiting to lock <0xa49cf5f8> (a java.io.PrintStream)
+	at sun.util.calendar.ZoneInfoFile.getZoneInfoMappings(ZoneInfoFile.java:1023)
+	at sun.util.calendar.ZoneInfoFile.getZoneAliases(ZoneInfoFile.java:798)
+	at sun.util.calendar.ZoneInfo.getAliasTable(ZoneInfo.java:838)
+	- locked <0xa4b1d0e0> (a java.lang.Class for sun.util.calendar.ZoneInfo)
+	at TzZiPsDeadlock$3.run(TzZiPsDeadlock.java:102)
+"Thread-0":
+	at java.util.TimeZone.getDefaultInAppContext(TimeZone.java:734)
+	- waiting to lock <0xa4b1d000> (a java.lang.Class for java.util.TimeZone)
+	at java.util.TimeZone.getDefaultRef(TimeZone.java:630)
+	at java.util.Date.normalize(Date.java:1193)
+	at java.util.Date.toString(Date.java:1027)
+	at java.lang.String.valueOf(String.java:2854)
+	at java.lang.StringBuilder.append(StringBuilder.java:128)
+	at sun.rmi.server.UnicastServerRef.logCallException(UnicastServerRef.java:484)
+	- locked <0xa49cf5f8> (a java.io.PrintStream)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:346)
+	at TzZiPsDeadlock$1.run(TzZiPsDeadlock.java:88)
+"Thread-1":
+	at sun.util.calendar.ZoneInfo.getAliasTable(ZoneInfo.java:836)
+	- waiting to lock <0xa4b1d0e0> (a java.lang.Class for sun.util.calendar.ZoneInfo)
+	at sun.util.calendar.ZoneInfo.getTimeZone(ZoneInfo.java:667)
+	at java.util.TimeZone.getTimeZone(TimeZone.java:571)
+	at java.util.TimeZone.setDefaultZone(TimeZone.java:668)
+	- locked <0xa4b1d000> (a java.lang.Class for java.util.TimeZone)
+	at java.util.TimeZone.getDefaultRef(TimeZone.java:635)
+	at java.util.TimeZone.getDefault(TimeZone.java:622)
+	at com.sun.java.util.jar.pack.PackerImpl.pack(PackerImpl.java:89)
+	at TzZiPsDeadlock$2.run(TzZiPsDeadlock.java:95)
+
+Found 1 deadlock.
+

@@ -1,0 +1,455 @@
+ceems@ubuntu:~/phd-new/thesis/last-minus$ jdb -Dsun.rmi.server.exceptionTrace=true -Dsun.rmi.log.useOld=true -Djava.rmi.server.logCalls=false -Djaxp.debug=true AnotherPropDeadlock
+Initializing jdb ...
+> stop in AnotherPropDeadlock$2.run
+Deferring breakpoint AnotherPropDeadlock$2.run.
+It will be set after the class is loaded.
+> stop in sun.rmi.runtime.Log$LogStreamLog.isLoggable
+Deferring breakpoint sun.rmi.runtime.Log$LogStreamLog.isLoggable.
+It will be set after the class is loaded.
+> run
+run AnotherPropDeadlock
+Set uncaught java.lang.Throwable
+Set deferred uncaught java.lang.Throwable
+> 
+VM Started: Set deferred breakpoint AnotherPropDeadlock$2.run
+Set deferred breakpoint sun.rmi.runtime.Log$LogStreamLog.isLoggable
+
+Breakpoint hit: "thread=Thread-1", AnotherPropDeadlock$2.run(), line=61 bci=0
+61          System.getProperties().storeToXML(System.err, "kkzb");
+
+Thread-1[1] where
+  [1] AnotherPropDeadlock$2.run (AnotherPropDeadlock.java:61)
+Thread-1[1] threads
+Group system:
+  (java.lang.ref.Reference$ReferenceHandler)0x131 Reference Handler cond. waiting
+  (java.lang.ref.Finalizer$FinalizerThread)0x130  Finalizer         cond. waiting
+  (java.lang.Thread)0x12f                         Signal Dispatcher running
+Group main:
+  (AnotherPropDeadlock$1)0x157                    Thread-0          running
+  (AnotherPropDeadlock$2)0x170                    Thread-1          running (at breakpoint)
+  (java.lang.Thread)0x158                         DestroyJavaVM     running
+Thread-1[1] thread 0x157
+Thread-0[1] suspend 0x170
+Thread-0[1] cont
+> 
+Breakpoint hit: "thread=Thread-0", sun.rmi.runtime.Log$LogStreamLog.isLoggable(), line=374 bci=0
+
+Thread-0[1] where  
+  [1] sun.rmi.runtime.Log$LogStreamLog.isLoggable (Log.java:374)
+  [2] sun.rmi.transport.tcp.TCPEndpoint.<clinit> (TCPEndpoint.java:121)
+  [3] sun.rmi.transport.LiveRef.<init> (LiveRef.java:75)
+  [4] sun.rmi.transport.LiveRef.<init> (LiveRef.java:56)
+  [5] sun.rmi.server.UnicastServerRef.<init> (UnicastServerRef.java:120)
+  [6] AnotherPropDeadlock$1.run (AnotherPropDeadlock.java:50)
+Thread-0[1] threadlocks
+Monitor information for thread Thread-0:
+  Owned monitor: instance of sun.rmi.runtime.Log$LogStreamLog(id=480)
+  Not waiting for a monitor
+Thread-0[1] stop in java.util.Date.toString
+Deferring breakpoint java.util.Date.toString.
+It will be set after the class is loaded.
+Thread-0[1] cont
+> 
+Breakpoint hit: "thread=Thread-0", sun.rmi.runtime.Log$LogStreamLog.isLoggable(), line=374 bci=0
+
+Thread-0[1] threads
+Group system:
+  (java.lang.ref.Reference$ReferenceHandler)0x131 Reference Handler cond. waiting
+  (java.lang.ref.Finalizer$FinalizerThread)0x130  Finalizer         cond. waiting
+  (java.lang.Thread)0x12f                         Signal Dispatcher running
+Group main:
+  (AnotherPropDeadlock$1)0x157                    Thread-0          running (at breakpoint)
+  (AnotherPropDeadlock$2)0x170                    Thread-1          running (at breakpoint)
+  (java.lang.Thread)0x158                         DestroyJavaVM     running
+Thread-0[1] stop in sun.util.calendar.CalendarSystem.forName
+Deferring breakpoint sun.util.calendar.CalendarSystem.forName.
+It will be set after the class is loaded.
+Thread-0[1] threads
+Group system:
+  (java.lang.ref.Reference$ReferenceHandler)0x131 Reference Handler cond. waiting
+  (java.lang.ref.Finalizer$FinalizerThread)0x130  Finalizer         cond. waiting
+  (java.lang.Thread)0x12f                         Signal Dispatcher running
+Group main:
+  (AnotherPropDeadlock$1)0x157                    Thread-0          running (at breakpoint)
+  (AnotherPropDeadlock$2)0x170                    Thread-1          running (at breakpoint)
+  (java.lang.Thread)0x158                         DestroyJavaVM     running
+Thread-0[1] where
+  [1] sun.rmi.runtime.Log$LogStreamLog.isLoggable (Log.java:374)
+  [2] sun.rmi.transport.tcp.TCPTransport.<init> (TCPTransport.java:136)
+  [3] sun.rmi.transport.tcp.TCPEndpoint.getLocalEndpoint (TCPEndpoint.java:193)
+  [4] sun.rmi.transport.tcp.TCPEndpoint.getLocalEndpoint (TCPEndpoint.java:166)
+  [5] sun.rmi.transport.LiveRef.<init> (LiveRef.java:75)
+  [6] sun.rmi.transport.LiveRef.<init> (LiveRef.java:56)
+  [7] sun.rmi.server.UnicastServerRef.<init> (UnicastServerRef.java:120)
+  [8] AnotherPropDeadlock$1.run (AnotherPropDeadlock.java:50)
+Thread-0[1] cont
+> 
+Breakpoint hit: "thread=Thread-0", sun.rmi.runtime.Log$LogStreamLog.isLoggable(), line=374 bci=0
+
+Thread-0[1] cont
+sun.rmi.server.UnicastServer> Ref.callLog is not null.
+Breakpoint hit: 
+"thread=Thread-0", sun.rmi.runtime.Log$LogStreamLog.isLoggable(), line=374 bci=0
+
+Thread-0[1] cont
+
+> Set deferred breakpoint java.util.Date.toString
+Set deferred breakpoint sun.util.calendar.CalendarSystem.forName
+
+Breakpoint hit: "thread=Thread-0", java.util.Date.toString(), line=1,010 bci=0
+
+Thread-0[1] where
+  [1] java.util.Date.toString (Date.java:1,010)
+  [2] java.lang.String.valueOf (String.java:2,826)
+  [3] java.lang.StringBuilder.append (StringBuilder.java:115)
+  [4] sun.rmi.server.UnicastServerRef.logCallException (UnicastServerRef.java:465)
+  [5] sun.rmi.server.UnicastServerRef.dispatch (UnicastServerRef.java:327)
+  [6] AnotherPropDeadlock$1.run (AnotherPropDeadlock.java:53)
+Thread-0[1] threadlocks
+Monitor information for thread Thread-0:
+  Owned monitor: instance of java.io.PrintStream(id=489)
+  Not waiting for a monitor
+Thread-0[1] stop in javax.xml.parsers.FactoryFinder.dPrint
+Deferring breakpoint javax.xml.parsers.FactoryFinder.dPrint.
+It will be set after the class is loaded.
+Thread-0[1] threads
+Group system:
+  (java.lang.ref.Reference$ReferenceHandler)0x131 Reference Handler cond. waiting
+  (java.lang.ref.Finalizer$FinalizerThread)0x130  Finalizer         cond. waiting
+  (java.lang.Thread)0x12f                         Signal Dispatcher running
+Group main:
+  (AnotherPropDeadlock$1)0x157                    Thread-0          running (at breakpoint)
+  (AnotherPropDeadlock$2)0x170                    Thread-1          running (at breakpoint)
+  (java.lang.Thread)0x158                         DestroyJavaVM     running
+Thread-0[1] clear
+Breakpoints set:
+	breakpoint AnotherPropDeadlock$2.run
+	breakpoint sun.rmi.runtime.Log$LogStreamLog.isLoggable
+	breakpoint java.util.Date.toString
+	breakpoint sun.util.calendar.CalendarSystem.forName
+	breakpoint javax.xml.parsers.FactoryFinder.dPrint
+Thread-0[1] suspend 0x157
+Thread-0[1] resume 0x170
+Thread-0[1] thread 0x170
+Thread-1[1] where
+  [1] AnotherPropDeadlock$2.run (AnotherPropDeadlock.java:61)
+Thread-1[1] cont
+> Set deferred breakpoint javax.xml.parsers.FactoryFinder.dPrint
+
+Breakpoint hit: "thread=Thread-1", javax.xml.parsers.FactoryFinder.dPrint(), line=87 bci=0
+
+Thread-1[1] where 
+  [1] javax.xml.parsers.FactoryFinder.dPrint (FactoryFinder.java:87)
+  [2] javax.xml.parsers.FactoryFinder.find (FactoryFinder.java:180)
+  [3] javax.xml.parsers.DocumentBuilderFactory.newInstance (DocumentBuilderFactory.java:123)
+  [4] java.util.XMLUtils.save (XMLUtils.java:107)
+  [5] java.util.Properties.storeToXML (Properties.java:917)
+  [6] java.util.Properties.storeToXML (Properties.java:881)
+  [7] AnotherPropDeadlock$2.run (AnotherPropDeadlock.java:61)
+Thread-1[1] threadlocks
+Monitor information for thread Thread-1:
+  Owned monitor: instance of java.util.Properties(id=495)
+  Not waiting for a monitor
+Thread-1[1] resume 0x157
+Thread-1[1] where
+  [1] javax.xml.parsers.FactoryFinder.dPrint (FactoryFinder.java:87)
+  [2] javax.xml.parsers.FactoryFinder.find (FactoryFinder.java:180)
+  [3] javax.xml.parsers.DocumentBuilderFactory.newInstance (DocumentBuilderFactory.java:123)
+  [4] java.util.XMLUtils.save (XMLUtils.java:107)
+  [5] java.util.Properties.storeToXML (Properties.java:917)
+  [6] java.util.Properties.storeToXML (Properties.java:881)
+  [7] AnotherPropDeadlock$2.run (AnotherPropDeadlock.java:61)
+Thread-1[1] cont
+> 
+> ^\2013-01-23 03:38:23
+Full thread dump Java HotSpot(TM) Server VM (20.10-b01 mixed mode):
+
+"event-handler" prio=10 tid=0x0978b000 nid=0x1efd in Object.wait() [0x7f5f6000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0xa3fd9738> (a com.sun.tools.jdi.EventQueueImpl)
+	at java.lang.Object.wait(Object.java:485)
+	at com.sun.tools.jdi.EventQueueImpl.removeUnfiltered(EventQueueImpl.java:171)
+	- locked <0xa3fd9738> (a com.sun.tools.jdi.EventQueueImpl)
+	at com.sun.tools.jdi.EventQueueImpl.remove(EventQueueImpl.java:78)
+	at com.sun.tools.jdi.EventQueueImpl.remove(EventQueueImpl.java:64)
+	at com.sun.tools.example.debug.tty.EventHandler.run(EventHandler.java:75)
+	at java.lang.Thread.run(Thread.java:662)
+
+"output reader" prio=10 tid=0x7fcb9000 nid=0x1efc runnable [0x7f647000]
+   java.lang.Thread.State: RUNNABLE
+	at java.io.FileInputStream.readBytes(Native Method)
+	at java.io.FileInputStream.read(FileInputStream.java:220)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	- locked <0xa3eaab70> (a java.io.BufferedInputStream)
+	at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:264)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:306)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:158)
+	- locked <0xa4114070> (a java.io.InputStreamReader)
+	at java.io.InputStreamReader.read(InputStreamReader.java:167)
+	at java.io.BufferedReader.fill(BufferedReader.java:136)
+	at java.io.BufferedReader.read(BufferedReader.java:157)
+	- locked <0xa4114070> (a java.io.InputStreamReader)
+	at com.sun.tools.example.debug.tty.VMConnection.dumpStream(VMConnection.java:284)
+	at com.sun.tools.example.debug.tty.VMConnection.access$000(VMConnection.java:48)
+	at com.sun.tools.example.debug.tty.VMConnection$1.run(VMConnection.java:308)
+
+"output reader" prio=10 tid=0x7fcb8800 nid=0x1efb runnable [0x7f698000]
+   java.lang.Thread.State: RUNNABLE
+	at java.io.FileInputStream.readBytes(Native Method)
+	at java.io.FileInputStream.read(FileInputStream.java:220)
+	at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:264)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:306)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:158)
+	- locked <0xa40d7370> (a java.io.InputStreamReader)
+	at java.io.InputStreamReader.read(InputStreamReader.java:167)
+	at java.io.BufferedReader.fill(BufferedReader.java:136)
+	at java.io.BufferedReader.read(BufferedReader.java:157)
+	- locked <0xa40d7370> (a java.io.InputStreamReader)
+	at com.sun.tools.example.debug.tty.VMConnection.dumpStream(VMConnection.java:284)
+	at com.sun.tools.example.debug.tty.VMConnection.access$000(VMConnection.java:48)
+	at com.sun.tools.example.debug.tty.VMConnection$1.run(VMConnection.java:308)
+
+"JDI Target VM Interface" daemon prio=10 tid=0x7fc2ec00 nid=0x1efa runnable [0x7f73a000]
+   java.lang.Thread.State: RUNNABLE
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.read(SocketInputStream.java:129)
+	at java.net.SocketInputStream.read(SocketInputStream.java:182)
+	at com.sun.tools.jdi.SocketConnection.readPacket(SocketTransportService.java:393)
+	- locked <0xa3f24090> (a java.lang.Object)
+	at com.sun.tools.jdi.TargetVM.run(TargetVM.java:99)
+	at java.lang.Thread.run(Thread.java:662)
+
+"JDI Internal Event Handler" daemon prio=10 tid=0x7fcad000 nid=0x1ef9 in Object.wait() [0x7f6e9000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0xa3fd33a0> (a com.sun.tools.jdi.EventQueueImpl)
+	at java.lang.Object.wait(Object.java:485)
+	at com.sun.tools.jdi.EventQueueImpl.removeUnfiltered(EventQueueImpl.java:171)
+	- locked <0xa3fd33a0> (a com.sun.tools.jdi.EventQueueImpl)
+	at com.sun.tools.jdi.EventQueueImpl.removeInternal(EventQueueImpl.java:106)
+	at com.sun.tools.jdi.InternalEventHandler.run(InternalEventHandler.java:36)
+	at java.lang.Thread.run(Thread.java:662)
+
+"process reaper" daemon prio=10 tid=0x7fcad800 nid=0x1eeb runnable [0x7f78b000]
+   java.lang.Thread.State: RUNNABLE
+	at java.lang.UNIXProcess.waitForProcessExit(Native Method)
+	at java.lang.UNIXProcess.access$900(UNIXProcess.java:20)
+	at java.lang.UNIXProcess$1$1.run(UNIXProcess.java:132)
+
+"Low Memory Detector" daemon prio=10 tid=0x7fc04800 nid=0x1ee9 runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread1" daemon prio=10 tid=0x7fc02800 nid=0x1ee8 waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread0" daemon prio=10 tid=0x7fc00800 nid=0x1ee7 waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Signal Dispatcher" daemon prio=10 tid=0x096eb800 nid=0x1ee6 waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Finalizer" daemon prio=10 tid=0x096dc400 nid=0x1ee5 in Object.wait() [0x7fe98000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0xa3cf1150> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:118)
+	- locked <0xa3cf1150> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:134)
+	at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:159)
+
+"Reference Handler" daemon prio=10 tid=0x096d7800 nid=0x1ee4 in Object.wait() [0x7fee9000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0xa3cf1050> (a java.lang.ref.Reference$Lock)
+	at java.lang.Object.wait(Object.java:485)
+	at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:116)
+	- locked <0xa3cf1050> (a java.lang.ref.Reference$Lock)
+
+"main" prio=10 tid=0x09658000 nid=0x1ee0 runnable [0xb6a8c000]
+   java.lang.Thread.State: RUNNABLE
+	at java.io.FileInputStream.readBytes(Native Method)
+	at java.io.FileInputStream.read(FileInputStream.java:220)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:256)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:317)
+	- locked <0xa3cfad10> (a java.io.BufferedInputStream)
+	at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:264)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:306)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:158)
+	- locked <0xa3e465c0> (a java.io.InputStreamReader)
+	at java.io.InputStreamReader.read(InputStreamReader.java:167)
+	at java.io.BufferedReader.fill(BufferedReader.java:136)
+	at java.io.BufferedReader.readLine(BufferedReader.java:299)
+	- locked <0xa3e465c0> (a java.io.InputStreamReader)
+	at java.io.BufferedReader.readLine(BufferedReader.java:362)
+	at com.sun.tools.example.debug.tty.TTY.<init>(TTY.java:693)
+	at com.sun.tools.example.debug.tty.TTY.main(TTY.java:1011)
+
+"VM Thread" prio=10 tid=0x096d3c00 nid=0x1ee3 runnable 
+
+"GC task thread#0 (ParallelGC)" prio=10 tid=0x0965f400 nid=0x1ee1 runnable 
+
+"GC task thread#1 (ParallelGC)" prio=10 tid=0x09660800 nid=0x1ee2 runnable 
+
+"VM Periodic Task Thread" prio=10 tid=0x7fc06800 nid=0x1eea waiting on condition 
+
+JNI global references: 1089
+
+Heap
+ PSYoungGen      total 14144K, used 6934K [0xa3cf0000, 0xa4cb0000, 0xb38f0000)
+  eden space 12160K, 57% used [0xa3cf0000,0xa43b59b0,0xa48d0000)
+  from space 1984K, 0% used [0xa4ac0000,0xa4ac0000,0xa4cb0000)
+  to   space 1984K, 0% used [0xa48d0000,0xa48d0000,0xa4ac0000)
+ PSOldGen        total 32256K, used 0K [0x844f0000, 0x86470000, 0xa3cf0000)
+  object space 32256K, 0% used [0x844f0000,0x844f0000,0x86470000)
+ PSPermGen       total 16384K, used 4030K2 [0x804f0000, 0x814f0000, 0x844f0000)
+  object space 16384K, 24% used [0x804f0000,0x808df9d8,0x814f0000)
+
+013-01-23 03:38:23
+Full thread dump Java HotSpot(TM) Server VM (20.10-b01 mixed mode):
+
+"DestroyJavaVM" prio=10 tid=0x09e77c00 nid=0x1eef waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Thread-1" prio=10 tid=0x09f48000 nid=0x1f03 waiting for monitor entry [0x7f8de000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+	at java.io.PrintStream.println(PrintStream.java:756)
+	- waiting to lock <0xa3b03060> (a java.io.PrintStream)
+	at javax.xml.parsers.FactoryFinder.dPrint(FactoryFinder.java:88)
+	at javax.xml.parsers.FactoryFinder.find(FactoryFinder.java:180)
+	at javax.xml.parsers.DocumentBuilderFactory.newInstance(DocumentBuilderFactory.java:123)
+	at java.util.XMLUtils.save(XMLUtils.java:107)
+	at java.util.Properties.storeToXML(Properties.java:917)
+	- locked <0xa3af1250> (a java.util.Properties)
+	at java.util.Properties.storeToXML(Properties.java:881)
+	- locked <0xa3af1250> (a java.util.Properties)
+	at AnotherPropDeadlock$2.run(AnotherPropDeadlock.java:61)
+
+"Thread-0" prio=10 tid=0x09f46400 nid=0x1f02 waiting for monitor entry [0x7f92f000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+	at java.util.Hashtable.get(Hashtable.java:333)
+	- waiting to lock <0xa3af1250> (a java.util.Properties)
+	at java.util.Properties.getProperty(Properties.java:932)
+	at java.lang.System.getProperty(System.java:653)
+	at sun.security.action.GetPropertyAction.run(GetPropertyAction.java:67)
+	at sun.security.action.GetPropertyAction.run(GetPropertyAction.java:32)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.util.TimeZone.setDefaultZone(TimeZone.java:539)
+	- locked <0x8055e9c8> (a java.lang.Class for java.util.TimeZone)
+	at java.util.TimeZone.getDefaultRef(TimeZone.java:528)
+	at java.util.Date.normalize(Date.java:1176)
+	at java.util.Date.toString(Date.java:1010)
+	at java.lang.String.valueOf(String.java:2826)
+	at java.lang.StringBuilder.append(StringBuilder.java:115)
+	at sun.rmi.server.UnicastServerRef.logCallException(UnicastServerRef.java:465)
+	- locked <0xa3b03060> (a java.io.PrintStream)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:327)
+	at AnotherPropDeadlock$1.run(AnotherPropDeadlock.java:53)
+
+"Low Memory Detector" daemon prio=10 tid=0x09f27800 nid=0x1f00 runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread1" daemon prio=10 tid=0x09f20400 nid=0x1eff waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"C2 CompilerThread0" daemon prio=10 tid=0x09f1f000 nid=0x1efe waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"JDWP Command Reader" daemon prio=10 tid=0x09f16400 nid=0x1ef8 runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"JDWP Event Helper Thread" daemon prio=10 tid=0x09f14800 nid=0x1ef7 runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"JDWP Transport Listener: dt_socket" daemon prio=10 tid=0x09f12000 nid=0x1ef6 runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Signal Dispatcher" daemon prio=10 tid=0x09f0a400 nid=0x1ef5 waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Finalizer" daemon prio=10 tid=0x09efc000 nid=0x1ef4 in Object.wait() [0x7fc98000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0xa3af1150> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:118)
+	- locked <0xa3af1150> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:134)
+	at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:159)
+
+"Reference Handler" daemon prio=10 tid=0x09ef7400 nid=0x1ef3 in Object.wait() [0x7fce9000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0xa3af1050> (a java.lang.ref.Reference$Lock)
+	at java.lang.Object.wait(Object.java:485)
+	at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:116)
+	- locked <0xa3af1050> (a java.lang.ref.Reference$Lock)
+
+"VM Thread" prio=10 tid=0x09ef3800 nid=0x1ef2 runnable 
+
+"GC task thread#0 (ParallelGC)" prio=10 tid=0x09e7f000 nid=0x1ef0 runnable 
+
+"GC task thread#1 (ParallelGC)" prio=10 tid=0x09e80400 nid=0x1ef1 runnable 
+
+"VM Periodic Task Thread" prio=10 tid=0x09f29400 nid=0x1f01 waiting on condition 
+
+JNI global references: 3306
+
+
+Found one Java-level deadlock:
+=============================
+"Thread-1":
+  waiting to lock monitor 0x09efb244 (object 0xa3b03060, a java.io.PrintStream),
+  which is held by "Thread-0"
+"Thread-0":
+  waiting to lock monitor 0x09efbe60 (object 0xa3af1250, a java.util.Properties),
+  which is held by "Thread-1"
+
+Java stack information for the threads listed above:
+===================================================
+"Thread-1":
+	at java.io.PrintStream.println(PrintStream.java:756)
+	- waiting to lock <0xa3b03060> (a java.io.PrintStream)
+	at javax.xml.parsers.FactoryFinder.dPrint(FactoryFinder.java:88)
+	at javax.xml.parsers.FactoryFinder.find(FactoryFinder.java:180)
+	at javax.xml.parsers.DocumentBuilderFactory.newInstance(DocumentBuilderFactory.java:123)
+	at java.util.XMLUtils.save(XMLUtils.java:107)
+	at java.util.Properties.storeToXML(Properties.java:917)
+	- locked <0xa3af1250> (a java.util.Properties)
+	at java.util.Properties.storeToXML(Properties.java:881)
+	- locked <0xa3af1250> (a java.util.Properties)
+	at AnotherPropDeadlock$2.run(AnotherPropDeadlock.java:61)
+"Thread-0":
+	at java.util.Hashtable.get(Hashtable.java:333)
+	- waiting to lock <0xa3af1250> (a java.util.Properties)
+	at java.util.Properties.getProperty(Properties.java:932)
+	at java.lang.System.getProperty(System.java:653)
+	at sun.security.action.GetPropertyAction.run(GetPropertyAction.java:67)
+	at sun.security.action.GetPropertyAction.run(GetPropertyAction.java:32)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.util.TimeZone.setDefaultZone(TimeZone.java:539)
+	- locked <0x8055e9c8> (a java.lang.Class for java.util.TimeZone)
+	at java.util.TimeZone.getDefaultRef(TimeZone.java:528)
+	at java.util.Date.normalize(Date.java:1176)
+	at java.util.Date.toString(Date.java:1010)
+	at java.lang.String.valueOf(String.java:2826)
+	at java.lang.StringBuilder.append(StringBuilder.java:115)
+	at sun.rmi.server.UnicastServerRef.logCallException(UnicastServerRef.java:465)
+	- locked <0xa3b03060> (a java.io.PrintStream)
+	at sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:327)
+	at AnotherPropDeadlock$1.run(AnotherPropDeadlock.java:53)
+
+Found 1 deadlock.
+
+Heap
+ PSYoungGen      total 14144K, used 1216K [0xa3af0000, 0xa4ab0000, 0xb36f0000)
+  eden space 12160K, 10% used [0xa3af0000,0xa3c200f0,0xa46d0000)
+  from space 1984K, 0% used [0xa48c0000,0xa48c0000,0xa4ab0000)
+  to   space 1984K, 0% used [0xa46d0000,0xa46d0000,0xa48c0000)
+ PSOldGen        total 32256K, used 0K [0x842f0000, 0x86270000, 0xa3af0000)
+  object space 32256K, 0% used [0x842f0000,0x842f0000,0x86270000)
+ PSPermGen       total 16384K, used 2491K [0x802f0000, 0x812f0000, 0x842f0000)
+  object space 16384K, 15% used [0x802f0000,0x8055ef00,0x812f0000)
+
+
+

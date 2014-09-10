@@ -1,0 +1,96 @@
+vivek@vivek-laptop:~/phd-new/Stalemate.git/OOAnalysis/output/deadlocks$ java CorbaIhDeadlock
+^\2014-09-10 11:15:20
+Full thread dump Java HotSpot(TM) Client VM (17.1-b03 mixed mode, sharing):
+
+"DestroyJavaVM" prio=10 tid=0x08afdc00 nid=0xada waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Thread-1" prio=10 tid=0x08b91c00 nid=0xae3 waiting for monitor entry [0xb4427000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+	at com.sun.org.omg.CORBA.InitializerHelper.type(InitializerHelper.java:42)
+	- waiting to lock <0x8ef3f080> (a java.lang.Class for com.sun.org.omg.CORBA.InitializerHelper)
+	at com.sun.org.omg.CORBA.ValueDefPackage.FullValueDescriptionHelper.type(FullValueDescriptionHelper.java:110)
+	- locked <0x8edc93e0> (a java.lang.Class for org.omg.CORBA.TypeCode)
+	- locked <0x8edc7fb8> (a java.lang.Class for com.sun.org.omg.CORBA.ValueDefPackage.FullValueDescriptionHelper)
+	at CorbaIhDeadlock$2.run(CorbaIhDeadlock.java:25)
+
+"Thread-0" prio=10 tid=0x08b90c00 nid=0xae2 waiting for monitor entry [0xb4478000]
+   java.lang.Thread.State: BLOCKED (on object monitor)
+	at com.sun.org.omg.CORBA.InitializerHelper.type(InitializerHelper.java:46)
+	- waiting to lock <0x8edc93e0> (a java.lang.Class for org.omg.CORBA.TypeCode)
+	- locked <0x8ef3f080> (a java.lang.Class for com.sun.org.omg.CORBA.InitializerHelper)
+	at com.sun.org.omg.CORBA.InitializerHelper.insert(InitializerHelper.java:28)
+	at CorbaIhDeadlock$1.run(CorbaIhDeadlock.java:20)
+
+"Low Memory Detector" daemon prio=10 tid=0x08b2f400 nid=0xae0 runnable [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"CompilerThread0" daemon prio=10 tid=0x08b2d800 nid=0xadf waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Signal Dispatcher" daemon prio=10 tid=0x08b2bc00 nid=0xade waiting on condition [0x00000000]
+   java.lang.Thread.State: RUNNABLE
+
+"Finalizer" daemon prio=10 tid=0x08b24000 nid=0xadd in Object.wait() [0xb4985000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x83960b10> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:118)
+	- locked <0x83960b10> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:134)
+	at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:159)
+
+"Reference Handler" daemon prio=10 tid=0x08b22800 nid=0xadc in Object.wait() [0xb49d6000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x83960a10> (a java.lang.ref.Reference$Lock)
+	at java.lang.Object.wait(Object.java:485)
+	at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:116)
+	- locked <0x83960a10> (a java.lang.ref.Reference$Lock)
+
+"VM Thread" prio=10 tid=0x08b21000 nid=0xadb runnable 
+
+"VM Periodic Task Thread" prio=10 tid=0x08b33000 nid=0xae1 waiting on condition 
+
+JNI global references: 885
+
+
+Found one Java-level deadlock:
+=============================
+"Thread-1":
+  waiting to lock monitor 0x08b27168 (object 0x8ef3f080, a java.lang.Class),
+  which is held by "Thread-0"
+"Thread-0":
+  waiting to lock monitor 0x08b285b8 (object 0x8edc93e0, a java.lang.Class),
+  which is held by "Thread-1"
+
+Java stack information for the threads listed above:
+===================================================
+"Thread-1":
+	at com.sun.org.omg.CORBA.InitializerHelper.type(InitializerHelper.java:42)
+	- waiting to lock <0x8ef3f080> (a java.lang.Class for com.sun.org.omg.CORBA.InitializerHelper)
+	at com.sun.org.omg.CORBA.ValueDefPackage.FullValueDescriptionHelper.type(FullValueDescriptionHelper.java:110)
+	- locked <0x8edc93e0> (a java.lang.Class for org.omg.CORBA.TypeCode)
+	- locked <0x8edc7fb8> (a java.lang.Class for com.sun.org.omg.CORBA.ValueDefPackage.FullValueDescriptionHelper)
+	at CorbaIhDeadlock$2.run(CorbaIhDeadlock.java:25)
+"Thread-0":
+	at com.sun.org.omg.CORBA.InitializerHelper.type(InitializerHelper.java:46)
+	- waiting to lock <0x8edc93e0> (a java.lang.Class for org.omg.CORBA.TypeCode)
+	- locked <0x8ef3f080> (a java.lang.Class for com.sun.org.omg.CORBA.InitializerHelper)
+	at com.sun.org.omg.CORBA.InitializerHelper.insert(InitializerHelper.java:28)
+	at CorbaIhDeadlock$1.run(CorbaIhDeadlock.java:20)
+
+Found 1 deadlock.
+
+Heap
+ def new generation   total 3456K, used 1040K [0x83960000, 0x83d20000, 0x87560000)
+  eden space 3072K,  33% used [0x83960000, 0x83a642c0, 0x83c60000)
+  from space 384K,   0% used [0x83c60000, 0x83c60000, 0x83cc0000)
+  to   space 384K,   0% used [0x83cc0000, 0x83cc0000, 0x83d20000)
+ tenured generation   total 7680K, used 0K [0x87560000, 0x87ce0000, 0x8ed60000)
+   the space 7680K,   0% used [0x87560000, 0x87560000, 0x87560200, 0x87ce0000)
+ compacting perm gen  total 12288K, used 2090K [0x8ed60000, 0x8f960000, 0x92d60000)
+   the space 12288K,  17% used [0x8ed60000, 0x8ef6a810, 0x8ef6aa00, 0x8f960000)
+    ro space 10240K,  61% used [0x92d60000, 0x93387500, 0x93387600, 0x93760000)
+    rw space 12288K,  60% used [0x93760000, 0x93e976f8, 0x93e97800, 0x94360000)
+
